@@ -22,7 +22,7 @@ class RefeicoesTableViewController: UITableViewController, AdicionaRefeicaoDeleg
         
         let refeicao = refeicoes[indexPath.row]
         celula.textLabel?.text = refeicao.nome
-                                                     // qual arquivo abrir: e o proprio arquivo
+                                                     // qual arquivo abrir: é o proprio arquivo
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(mostrarDetalhes(_:)))
         celula.addGestureRecognizer(longPress)
         
