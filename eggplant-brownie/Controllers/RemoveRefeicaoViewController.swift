@@ -7,12 +7,14 @@
 
 import UIKit
 
-class RemoveRefeicaoViewController : UIViewController {
+class RemoveRefeicaoViewController{
     
     let controller: UIViewController
+    
     init(controller: UIViewController) {
         self.controller = controller
     }
+    
     // clousure - funcoes dentro de parametros
     
                                         // somente quando o usuario fizer uma ação 
@@ -27,7 +29,7 @@ class RemoveRefeicaoViewController : UIViewController {
         
         alerta.addAction(botaoRemover)
         
-        // acesso ao metodo present
+        // acessar o metodo present
         controller.present(alerta, animated: true, completion: nil)
     }
 }

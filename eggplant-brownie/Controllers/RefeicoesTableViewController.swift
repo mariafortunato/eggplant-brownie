@@ -8,10 +8,21 @@ import UIKit
                                     // metodos obrigatorios da tableview -- protocolo
 class RefeicoesTableViewController: UITableViewController, AdicionaRefeicaoDelegate {
     
-    var refeicoes = [Refeicao(nome: "Macarrão", felicidade: 5),
-                     Refeicao(nome: "Arroz", felicidade: 4),
-                     Refeicao(nome: "Lasanha", felicidade: 4)]
+    var refeicoes: [Refeicao] = []
     
+    override func viewDidLoad() {
+        
+        refeicoes = RefeicaoDao().recupera()
+        
+    }
+    func recuperaCaminho() -> URL? {
+        // implementaçao para salvar o arquivo
+        guard let diretorio = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        // caminho para salvar a lista na pasta refeicao
+        let caminho = diretorio.appendingPathComponent("refeicao")
+        
+        return caminho
+    }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return refeicoes.count
@@ -32,6 +43,8 @@ class RefeicoesTableViewController: UITableViewController, AdicionaRefeicaoDeleg
     func add(_ refeicao: Refeicao){
         refeicoes.append(refeicao)
         tableView.reloadData()
+        
+        RefeicaoDao().save(refeicoes)
     }
     
     @objc func mostrarDetalhes(_ gesture: UILongPressGestureRecognizer) {
@@ -44,10 +57,10 @@ class RefeicoesTableViewController: UITableViewController, AdicionaRefeicaoDeleg
             // pega o obujeto da linha
             let refeicao = refeicoes[indexPath.row]
             
-            RemoveRefeicaoViewController(controller: self).exibe(refeicao, handler:
-                { alerta in
+            RemoveRefeicaoViewController(controller: self).exibe(refeicao, handler: { alerta in
                 self.refeicoes.remove(at: indexPath.row)
-                self.tableView.reloadData()})
+                self.tableView.reloadData()
+            })
         }
     }
     

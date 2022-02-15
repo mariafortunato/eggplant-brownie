@@ -14,27 +14,25 @@ protocol AdicionaRefeicaoDelegate {
                     // metodos
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AdicionarItensDelegate{
     
-    // MARK: - IBOutlet
-    
-    @IBOutlet weak var itensTableView: UITableView?
-    
     // MARK: - Atributos
     var delegate: AdicionaRefeicaoDelegate?
-    var itens: [Item] = [Item(nome: "Molho de tomate", calorias: 40.0),
-                         Item(nome: "Queijo", calorias: 70.0),
-                         Item(nome: "Manjericão", calorias: 10.0),
-                         Item(nome: "Azeitona", calorias: 20.0)]
+    var itens: [Item] = []
     var itensSelecionados: [Item] = []
     
     // MARK: - IBOutlets
     @IBOutlet var nomeTextField: UITextField?
     @IBOutlet weak var felicidadeTextField: UITextField?
+    @IBOutlet weak var itensTableView: UITableView?
     
     // MARK: - View life cycle
     
     override func viewDidLoad() { // acabou de ser carregada
         let botaoAdicionarItem = UIBarButtonItem(title: "adicionar", style: .plain, target: self, action: #selector(adicionarItem))
         navigationItem.rightBarButtonItem = botaoAdicionarItem
+        recuperaItens()
+    }
+    func recuperaItens() {
+        itens = ItemDao().recupera()
     }
     
     @objc func adicionarItem() {
@@ -44,14 +42,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     func add(_ item: Item) {
         itens.append(item)
+        ItemDao().save(itens)
         // verificando e atualizando a tela
         if let tableView = itensTableView {
             tableView.reloadData()
         } else {
-            Alerta(controller: self).exibe(mensagem: "Não foi possível atualizar a tabela")
+            Alerta(controller: self).exibe(mensagem: "Erro ao atualizar tabela")
         }
         
     }
+    
     
     // MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
