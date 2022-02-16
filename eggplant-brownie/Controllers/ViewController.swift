@@ -97,9 +97,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
            
             return nil
         }
-        var refeicao = Refeicao(nome: nomeRefeicao, felicidade: felicidade, itens: itensSelecionados)
-            
-        print("Comi \(refeicao.nome) e fiquei com felicidade \(refeicao.felicidade)")
+        let refeicao = Refeicao(nome: nomeRefeicao, felicidade: felicidade, itens: itensSelecionados)
         
         return refeicao
     }

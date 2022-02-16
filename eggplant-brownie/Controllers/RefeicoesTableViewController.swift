@@ -54,7 +54,7 @@ class RefeicoesTableViewController: UITableViewController, AdicionaRefeicaoDeleg
             let celula = gesture.view as! UITableViewCell
             // se for diferente de nil
             guard let indexPath = tableView.indexPath(for: celula) else { return }
-            // pega o obujeto da linha
+            // pega o objeto da linha
             let refeicao = refeicoes[indexPath.row]
             
             RemoveRefeicaoViewController(controller: self).exibe(refeicao, handler: { alerta in
